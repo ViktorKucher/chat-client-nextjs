@@ -5,7 +5,7 @@ import { User, UserState } from "@/types/UserSliceTypes";
 
 const initialState: UserState = {
   isLoading: false,
-  error: undefined,
+  error: null,
   user: {
     _id: "",
     nickname: "",
@@ -22,7 +22,7 @@ export const user = createSlice({
     },
     [login.fulfilled]: (state, action: IPayloadAction<User>) => {
       state.isLoading = true;
-      state.user = action;
+      state.user = action.payload;
     },
     [login.rejected]: (state, action: IPayloadAction<string>) => {
       state.isLoading = true;
