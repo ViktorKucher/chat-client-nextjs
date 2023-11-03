@@ -7,6 +7,6 @@ export interface User {
 
 export interface UserState {
   isLoading: boolean;
-  error: string | null;
+  error?: string;
   user: User;
 }

@@ -5,7 +5,6 @@ import { User, UserState } from "@/types/UserSliceTypes";
 
 const initialState: UserState = {
   isLoading: false,
-  error: null,
   user: {
     _id: "",
     nickname: "",

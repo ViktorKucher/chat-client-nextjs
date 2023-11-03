@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUserLogin, IUserRegistration } from "@/types/AuthorizationTypes";
-import { SingInUser, SingUpUser } from "@/api/auth";
+import { SignUpUser, SignInUser } from "@/api/auth";
 
 export const login = createAsyncThunk(
   "user/login",
   async function ({ email, password }: IUserLogin, { rejectWithValue }) {
     try {
-      return await SingInUser(email, password);
+      return await SignInUser(email, password);
     } catch (error) {
       return rejectWithValue(error.response.data || error.message);
     }
@@ -20,7 +20,7 @@ export const registration = createAsyncThunk(
     { rejectWithValue },
   ) {
     try {
-      return await SingUpUser(email, password, nickname);
+      return await SignUpUser(email, password, nickname);
     } catch (error) {
       return rejectWithValue(error.response.data || error.message);
     }
