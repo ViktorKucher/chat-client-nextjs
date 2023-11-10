@@ -28,7 +28,7 @@ export default function Registration() {
     nickname,
   }) => {
     dispatch(registration({ email, password, nickname }));
-    if (user.error) {
+    if (!user.error) {
       router.push("/dashboard");
     }
   };

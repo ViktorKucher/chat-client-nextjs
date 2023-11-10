@@ -26,7 +26,7 @@ export default function SignIn() {
     password,
   }) => {
     dispatch(login({ email, password }));
-    if (user.error) {
+    if (!user.error) {
       router.push("/dashboard");
     }
   };
