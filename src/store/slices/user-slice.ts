@@ -4,7 +4,7 @@ import { IPayloadAction } from "@/types/ReduxTypes";
 import { User, UserState } from "@/types/UserSliceTypes";
 
 const initialState: UserState = {
-  isLoading: false,
+  isLoading: true,
   user: {
     _id: "",
     nickname: "",
@@ -15,29 +15,43 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {
-    [login.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(login.pending, (state) => {
       state.isLoading = false;
-    },
-    [login.fulfilled]: (state, action: IPayloadAction<User>) => {
+      state.user = null;
+      state.error = null;
+    });
+    builder.addCase(login.fulfilled, (state, action: IPayloadAction<User>) => {
       state.isLoading = true;
       state.user = action.payload;
-    },
-    [login.rejected]: (state, action: IPayloadAction<string>) => {
+      state.error = null;
+    });
+    builder.addCase(login.rejected, (state, action: IPayloadAction<string>) => {
       state.isLoading = true;
       state.error = action.payload;
-    },
-    [registration.pending]: (state) => {
+      state.user = null;
+    });
+    builder.addCase(registration.pending, (state) => {
       state.isLoading = false;
-    },
-    [registration.fulfilled]: (state, action: IPayloadAction<User>) => {
-      state.isLoading = true;
-      state.user = action;
-    },
-    [registration.rejected]: (state, action: IPayloadAction<string>) => {
-      state.isLoading = true;
-      state.error = action.payload;
-    },
+      state.user = null;
+      state.error = null;
+    });
+    builder.addCase(
+      registration.fulfilled,
+      (state, action: IPayloadAction<User>) => {
+        state.isLoading = true;
+        state.user = action.payload;
+        state.error = null;
+      },
+    );
+    builder.addCase(
+      registration.rejected,
+      (state, action: IPayloadAction<string>) => {
+        state.isLoading = true;
+        state.error = action.payload;
+        state.user = null;
+      },
+    );
   },
 });
 
