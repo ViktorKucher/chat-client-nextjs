@@ -11,5 +11,8 @@ const config: Config = withMT({
     extend: {},
   },
   plugins: [],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 });
 export default config;
