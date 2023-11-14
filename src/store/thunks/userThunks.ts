@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUserLogin, IUserRegistration } from "@/types/AuthorizationTypes";
 import { SignUpUser, SignInUser } from "@/api/auth";
+import { AxiosError } from "axios";
 
 export const login = createAsyncThunk(
   "user/login",
@@ -8,7 +9,9 @@ export const login = createAsyncThunk(
     try {
       return await SignInUser(email, password);
     } catch (error) {
-      return rejectWithValue(error.response.data || error.message);
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error?.response?.data || error?.message);
+      }
     }
   },
 );
@@ -22,7 +25,9 @@ export const registration = createAsyncThunk(
     try {
       return await SignUpUser(email, password, nickname);
     } catch (error) {
-      return rejectWithValue(error.response.data || error.message);
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error?.response?.data || error?.message);
+      }
     }
   },
 );

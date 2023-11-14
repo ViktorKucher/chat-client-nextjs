@@ -4,11 +4,8 @@ import { IPayloadAction } from "@/types/ReduxTypes";
 import { User, UserState } from "@/types/UserSliceTypes";
 
 const initialState: UserState = {
-  isLoading: false,
-  user: {
-    _id: "",
-    nickname: "",
-  },
+  isLoading: true,
+  user: null,
 };
 
 export const user = createSlice({
@@ -16,27 +13,41 @@ export const user = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [login.pending]: (state) => {
+    [login.pending.toString()]: (state) => {
       state.isLoading = false;
+      state.user = null;
+      state.error = null;
     },
-    [login.fulfilled]: (state, action: IPayloadAction<User>) => {
+    [login.fulfilled.toString()]: (state, action: IPayloadAction<User>) => {
       state.isLoading = true;
       state.user = action.payload;
+      state.error = null;
     },
-    [login.rejected]: (state, action: IPayloadAction<string>) => {
+    [login.rejected.toString()]: (state, action: IPayloadAction<string>) => {
       state.isLoading = true;
       state.error = action.payload;
+      state.user = null;
     },
-    [registration.pending]: (state) => {
+    [registration.pending.toString()]: (state) => {
       state.isLoading = false;
+      state.user = null;
+      state.error = null;
     },
-    [registration.fulfilled]: (state, action: IPayloadAction<User>) => {
+    [registration.fulfilled.toString()]: (
+      state,
+      action: IPayloadAction<User>,
+    ) => {
       state.isLoading = true;
-      state.user = action;
+      state.user = action.payload;
+      state.error = null;
     },
-    [registration.rejected]: (state, action: IPayloadAction<string>) => {
+    [registration.rejected.toString()]: (
+      state,
+      action: IPayloadAction<string>,
+    ) => {
       state.isLoading = true;
       state.error = action.payload;
+      state.user = null;
     },
   },
 });
